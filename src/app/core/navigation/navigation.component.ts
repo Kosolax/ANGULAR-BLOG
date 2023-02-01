@@ -6,10 +6,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./navigation.component.css']
 })
 export class NavigationComponent implements OnInit {
+  //Temporary
+  tags: Tag[] = [{ name: "tag1" }, { name: "tag2" }]
+  isMenuCollapsed = true;
 
   constructor() { }
 
   ngOnInit(): void {
   }
 
+}
+
+//Temporary
+export interface Tag {
+  name: string;
 }

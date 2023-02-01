@@ -6,6 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app.routing';
 import { HomeComponent } from './feature/home/home.component';
 import { BrowserModule } from '@angular/platform-browser';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { BrowserModule } from '@angular/platform-browser';
     SharedModule,
     HttpClientModule,
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
+    NgbModule,
   ],
   exports: [],
   bootstrap: [AppComponent]
