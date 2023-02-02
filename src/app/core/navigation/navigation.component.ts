@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from '../../shared/services/authentication.service';
 
 @Component({
   selector: 'app-navigation',
@@ -6,10 +7,23 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./navigation.component.css']
 })
 export class NavigationComponent implements OnInit {
+  //Temporary
+  tags: Tag[] = [{ name: "tag1" }, { name: "tag2" }]
+  isMenuCollapsed = true;
+  public isAdmin: boolean = false;
 
-  constructor() { }
+  constructor(private authService: AuthenticationService) { }
 
   ngOnInit(): void {
+    this.authService.authChanged
+      .subscribe(() => {
+        this.isAdmin = this.authService.isUserAdmin();
+      })
   }
 
+}
+
+//Temporary
+export interface Tag {
+  name: string;
 }

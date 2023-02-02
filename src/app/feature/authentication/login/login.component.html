@@ -1,0 +1,33 @@
+<div class="main-div">
+  <h1 class="card-title">Connectez-vous</h1>
+  <div *ngIf="showError" class="alert alert-danger" role="alert">
+    {{errorMessage}}
+  </div>
+
+  <form class="col-md-5 d-flex flex-column align-items-center justify-content-center" [formGroup]="loginForm" autocomplete="off" novalidate (ngSubmit)="loginUser(loginForm.value)">
+
+    <div class="col-md-12 input-form">
+      <label class="col-form-label">Email</label>
+      <div>
+        <input type="text" id="username" formControlName="username" class="form-control" />
+      </div>
+      <div>
+        <em *ngIf="validateControl('username') && hasError('username', 'required')">Username is required</em>
+      </div>
+    </div>
+
+    <div class="col-md-12 input-form">
+      <label class="col-form-label">Mot de passe</label>
+      <div>
+        <input type="password" id="password" formControlName="password" class="form-control" />
+      </div>
+      <div>
+        <em *ngIf="validateControl('password') && hasError('password', 'required')">Password is required</em>
+      </div>
+    </div>
+
+    <br>
+
+    <button type="submit" class="login-button main-orange-background" [disabled]="!loginForm.valid">Login</button>
+  </form>
+</div>

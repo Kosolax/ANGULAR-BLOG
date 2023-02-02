@@ -1,0 +1,25 @@
+.main-footer-div {
+  padding: 10px 0px;
+  width: 100%;
+}
+
+.sub-footer-div {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-content: center;
+  padding: 10px 0;
+}
+
+a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-align: center;
+  padding: 4px 0;
+  cursor: pointer;
+}
+
+p {
+  text-align: center;
+  padding: 10px 0 0 0;
+}

@@ -1,1 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
+.main-orange-background {
+  background-color: #e84c3d;
+}
+
+.blue-font-color {
+  color: #536170;
+}
+
+.fake-white-background {
+    background-color: #F4F4F4;
+}
+
+.gray-blue-background-color {
+  background-color: #DBDEE7;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}

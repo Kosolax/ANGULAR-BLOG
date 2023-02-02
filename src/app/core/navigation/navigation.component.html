@@ -1,1 +1,44 @@
-<p>navigation works!</p>
+<nav class="navbar navbar-expand-lg navbar-light main-orange-background navbar-complement">
+  <button class="navbar-toggler navbar-toggler-complement" type="button" (click)="isMenuCollapsed = !isMenuCollapsed">&#9776;</button>
+  <a class="navbar-brand" [routerLink]="'.'">Maël MININGER's Blog</a>
+  <div>
+    <ul class="navbar-nav classic-nav-bar">
+      <li class="nav-item">
+        <a class="nav-link classic-a" [routerLink]="'.'" [routerLinkActive]="['active']">Accueil</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link classic-a" [routerLink]="'/articles'" [routerLinkActive]="['active']">Articles</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link classic-a" [routerLink]="'/contact-me'" [routerLinkActive]="['active']">Me contacter</a>
+      </li>
+      <li class="nav-item classic-a" *ngIf="isAdmin">
+        <a class="nav-link" routerLink="/admin/articles">Articles</a>
+      </li>
+      <li class="nav-item classic-a" *ngIf="isAdmin">
+        <a class="nav-link" routerLink="/admin/tags">Tags</a>
+      </li>
+    </ul>
+</div>
+</nav>
+<div #collapse="ngbCollapse" [(ngbCollapse)]="isMenuCollapsed" [horizontal]="true" class="mobile-nav">
+  <ul class="navbar-nav fake-white-background child-mobile-nav transparent-background">
+    <li class="nav-item">
+      <a class="nav-link blue-font-color" [routerLink]="'.'" (click)="isMenuCollapsed = true" [routerLinkActive]="['active']">Accueil</a>
+    </li>
+    <li class="nav-item">
+    <a class="nav-link" [routerLink]="'/articles'">Articles</a>
+    <ul class="navbar-nav">
+      <li class="nav-item" *ngFor="let tag of tags">
+        <a class="nav-link" [routerLink]="['/articles/', tag.name]" [routerLinkActive]="['active']">{{tag.name}}</a>
+      </li>
+    </ul>
+  </li>
+    <li class="nav-item">
+      <a class="nav-link blue-font-color" [routerLink]="'/contact-me'" [routerLinkActive]="['active']" (click)="isMenuCollapsed = true">Me contacter</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link blue-font-color" [routerLink]="'/authentication/connect'" [routerLinkActive]="['active']" (click)="isMenuCollapsed = true">Se connecter</a>
+    </li>
+  </ul>
+</div>
