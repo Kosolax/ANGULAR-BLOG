@@ -4,6 +4,7 @@ import { HomeComponent } from "./feature/home/home.component";
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
+  { path: 'authentication', loadChildren: () => import('./feature/authentication/authentication.module').then(m => m.AuthenticationModule) },
 ];
 
 // @dynamic

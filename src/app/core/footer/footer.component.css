@@ -16,9 +16,10 @@ a {
   text-underline-offset: 3px;
   text-align: center;
   padding: 4px 0;
+  cursor: pointer;
 }
 
 p {
   text-align: center;
-  padding: 10px 0px;
+  padding: 10px 0 0 0;
 }

@@ -7,7 +7,8 @@
     <div class="vr"></div>
     <div>
       <a class="nav-link classic-a" [routerLink]="'/contact-me'">Contact</a>
-      <a class="nav-link classic-a" [routerLink]="'/connect'">Se connecter</a>
+      <a *ngIf="!isUserAuthenticated" class="nav-link classic-a" [routerLink]="'/authentication/connect'">Se connecter</a>
+      <a *ngIf="isUserAuthenticated" class="nav-link classic-a" (click)="logout()">Se déconnecter</a>
     </div>
   </div>
   <div>
