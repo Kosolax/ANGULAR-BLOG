@@ -1,0 +1,4 @@
+.parent-router-outlet {
+  display: flex;
+  flex-grow: 1;
+}
