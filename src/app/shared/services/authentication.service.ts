@@ -31,7 +31,7 @@ export class AuthenticationService {
       const decodedToken = this.jwtHelper.decodeToken(token);
       if (decodedToken != null) {
         const role = decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']
-        return role === 'Administrator';
+        return role === 'Admin';
       }
     }
 

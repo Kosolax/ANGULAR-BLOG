@@ -1,0 +1,18 @@
+<nav>
+  <ul class="pagination">
+    <li class="page-item" [ngClass]="currentPage == 1 ? 'disabled' : ''">
+      <a class="page-link" aria-label="Previous" (click)='previous()'>
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    <li *ngIf="currentPage > 1" class="page-item"><a class="page-link" (click)='goToPage(currentPage - 1)'>{{ currentPage - 1 }}</a></li>
+    <li class="page-item"><a class="page-link" (click)='goToPage(currentPage)'>{{ currentPage }}</a></li>
+    <li *ngIf="currentPage != totalPages" class="page-item"><a class="page-link" (click)='goToPage(currentPage + 1)'>{{ currentPage + 1 }}</a></li>
+    <li *ngIf="currentPage > 2" class="page-item"><a class="page-link" (click)='goToPage(totalPages)'>{{ totalPages }}</a></li>
+    <li class="page-item" [ngClass]="currentPage == totalPages ? 'disabled' : ''">
+      <a class="page-link" aria-label="Next" (click)='next()'>
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
+</nav>

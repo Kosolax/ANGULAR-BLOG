@@ -1,0 +1,15 @@
+<form class="main-div" #tagForm="ngForm" (ngSubmit)="onSubmit(tagForm)">
+  <app-breadcrumb></app-breadcrumb>
+  <h2>Tags</h2>
+  <div class="form-group col-2">
+    <label>Name</label>
+    <input name="name" class="form-control" [(ngModel)]="tag.name" #name="ngModel"
+           [ngClass]="{ 'is-invalid': tagForm.submitted && name.invalid }" required>
+    <div class="invalid-feedback" *ngIf="tagForm.submitted && name.invalid">
+      <p *ngIf="name.errors?.['required']">name is required</p>
+    </div>
+  </div>
+  <div class="button-div">
+    <button class="btn btn-danger">Submit</button>
+  </div>
+</form>
