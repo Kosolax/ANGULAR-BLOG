@@ -32,6 +32,9 @@ export class DetailTagComponent implements OnInit {
         this.isCreating = false;
         this.tagsService.getTag(this.id);
       }
+      else {
+        this.tag = {} as Tag;
+      }
     });
   }
 

@@ -14,3 +14,9 @@
 .input-form {
     margin: 20px 0;
 }
+
+.main-div {
+    display: flex;
+    justify-content : center;
+    align-items : center;
+}

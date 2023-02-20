@@ -30,7 +30,7 @@ export class TagService {
           //TODO
           console.log("TODO")
         }
-      })
+      });
   }
 
   public updateTag = (tag: Tag) => {
