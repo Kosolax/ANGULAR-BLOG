@@ -26,7 +26,7 @@ export class ErrorHandlerService implements HttpInterceptor {
     else if (error.status === 400) {
       return this.handleBadRequest(error);
     }
-    else if (error.status === 401) {
+    else if (error.status === 401 || error.status === 0) {
       return this.handleUnauthorized(error);
     }
     else if (error.status === 403) {
@@ -37,7 +37,7 @@ export class ErrorHandlerService implements HttpInterceptor {
   }
 
   private handleForbidden = (error: HttpErrorResponse) => {
-    this.router.navigate(["/forbidden"], { queryParams: { returnUrl: this.router.url } });
+    this.router.navigate(["/forbidden"]);
     return "Forbidden";
   }
 
@@ -61,11 +61,11 @@ export class ErrorHandlerService implements HttpInterceptor {
   }
 
   private handleUnauthorized = (error: HttpErrorResponse) => {
-    if (this.router.url === '/authentication/login') {
+    if (this.router.url === '/authentication/connect') {
       return 'Authentication failed. Wrong Username or Password';
     }
     else {
-      this.router.navigate(['/authentication/login'], { queryParams: { returnUrl: this.router.url } });
+      this.router.navigate(['/authentication/connect'], { queryParams: { returnUrl: this.router.url } });
       return error.message;
     }
   }

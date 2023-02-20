@@ -21,3 +21,11 @@ body {
   flex-direction: column;
   justify-content: space-between;
 }
+
+.main-div {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100%;
+  padding: 1em;
+}

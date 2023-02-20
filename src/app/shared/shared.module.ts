@@ -3,9 +3,11 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
+import { PaginationComponent } from './components/pagination/pagination.component';
 
 @NgModule({
   declarations: [
+    PaginationComponent
   ],
   imports: [
     RouterModule,
@@ -20,6 +22,7 @@ import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
     FormsModule,
     ReactiveFormsModule,
     NgbCollapseModule,
+    PaginationComponent,
   ],
   providers: []
 })
