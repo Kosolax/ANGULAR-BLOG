@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Tag } from '../../../model/Tag';
-import { TagService } from '../../../shared/services/tag.service';
+import { Tag } from '../../../../model/Tag';
+import { TagService } from '../../../../shared/services/tag.service';
 
 @Component({
   selector: 'app-detail-tag',

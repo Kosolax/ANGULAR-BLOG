@@ -3,12 +3,13 @@ import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { AuthenticationService } from './authentication.service';
 @Injectable({
   providedIn: 'root'
 })
 export class ErrorHandlerService implements HttpInterceptor {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private authenticationService: AuthenticationService) { }
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(req)
       .pipe(
@@ -65,6 +66,7 @@ export class ErrorHandlerService implements HttpInterceptor {
       return 'Authentication failed. Wrong Username or Password';
     }
     else {
+      this.authenticationService.logout();
       this.router.navigate(['/authentication/connect'], { queryParams: { returnUrl: this.router.url } });
       return error.message;
     }

@@ -1,0 +1,56 @@
+<form class="main-div" #articleForm="ngForm" (ngSubmit)="onSubmit(articleForm)">
+  <app-breadcrumb></app-breadcrumb>
+  <h2>Articles</h2>
+  <div class="row">
+    <div class="col-md-6 col-12">
+      <div class="form-group">
+        <label>Titre</label>
+        <input name="title" class="form-control" [(ngModel)]="article.title" #title="ngModel"
+               [ngClass]="{ 'is-invalid': articleForm.submitted && title.invalid }" required>
+        <div class="invalid-feedback" *ngIf="articleForm.submitted && title.invalid">
+          <p *ngIf="title.errors?.['required']">Title is required</p>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Slug</label>
+        <input name="slug" class="form-control" [(ngModel)]="article.slug" #slug="ngModel"
+               [ngClass]="{ 'is-invalid': articleForm.submitted && slug.invalid }" required>
+        <div class="invalid-feedback" *ngIf="articleForm.submitted && slug.invalid">
+          <p *ngIf="slug.errors?.['required']">Slug is required</p>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label>Tags</label>
+        <div class="form-check article-tag col" *ngFor="let tag of tags">
+          <input class="form-check-input" id="flexCheckDefault" [checked]="shouldBeChecked(tag.id)" type="checkbox" value="{{ tag.id }}" aria-label="Checkbox for following text input" (change)="toggleTag($event)" />
+          <label class="form-check-label" for="flexCheckDefault">
+            {{ tag.name }}
+          </label>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Thumbnail</label>
+        <input class="form-control" [ngClass]="{ 'is-invalid': articleForm.submitted && isRequired }" required type="file" name="thumbnail" #file (change)="uploadFile(file.files)">
+        <div class="invalid-feedback" *ngIf="articleForm.submitted && isRequired">
+          <p *ngIf="isRequired">Thumbnail is required</p>
+        </div>
+        <img class="img-fluid" [src]="article.thumbnail" />
+      </div>
+      <div class="form-group">
+        <label>Content</label>
+        <textarea name="content" class="form-control" [(ngModel)]="article.content" #content="ngModel"
+                  [ngClass]="{ 'is-invalid': articleForm.submitted && content.invalid }" required rows="10"></textarea>
+        <div class="invalid-feedback" *ngIf="articleForm.submitted && content.invalid">
+          <p *ngIf="content.errors?.['required']">Content is required</p>
+        </div>
+      </div>
+
+      <div class="button-div">
+        <button class="btn btn-danger">Submit</button>
+      </div>
+    </div>
+    <div class="col-md-6 col-12">
+      <markdown [data]="markdown"></markdown>
+    </div>
+  </div>
+</form>

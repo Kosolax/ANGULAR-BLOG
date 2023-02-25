@@ -5,11 +5,13 @@ import { RouterModule } from '@angular/router';
 import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 import { PaginationComponent } from './components/pagination/pagination.component';
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
+import { JoinPipe } from './pipes/join.pipe';
 
 @NgModule({
   declarations: [
     PaginationComponent,
-    BreadcrumbComponent
+    BreadcrumbComponent,
+    JoinPipe,
   ],
   imports: [
     RouterModule,
@@ -26,6 +28,7 @@ import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.componen
     NgbCollapseModule,
     PaginationComponent,
     BreadcrumbComponent,
+    JoinPipe,
   ],
   providers: []
 })

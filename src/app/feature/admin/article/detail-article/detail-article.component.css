@@ -1,0 +1,15 @@
+.article-tag {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.article-tag label {
+  margin: 5px;
+}
+
+.button-div {
+  display: flex;
+  margin: 1em 0;
+}
