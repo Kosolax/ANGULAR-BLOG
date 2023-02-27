@@ -13,10 +13,12 @@ export class TagService {
   private deleteChangeSub = new BehaviorSubject<boolean>(false)
   private adminPaginationSub = new BehaviorSubject<AdminPagination<Tag>>({} as AdminPagination<Tag>)
   private tagChangeSub = new BehaviorSubject<Tag>({} as Tag)
+  private tagsChangeSub = new BehaviorSubject<Tag[]>({} as Tag[])
 
   public deleteChange = this.deleteChangeSub.asObservable();
   public adminPagination = this.adminPaginationSub.asObservable();
   public tagChange = this.tagChangeSub.asObservable();
+  public tagsChange = this.tagsChangeSub.asObservable();
 
   constructor(private httpClient: HttpClient, @Inject('BASE_URL') private baseUrl: string, private router: Router) { }
 
@@ -73,7 +75,18 @@ export class TagService {
   }
 
   public listTags = () => {
-    return this.httpClient.get<Tag[]>(this.baseUrl + TagsRoutes.BASE_URL + TagsRoutes.LIST);
+    return this.httpClient.get<Tag[]>(this.baseUrl + TagsRoutes.BASE_URL + TagsRoutes.LIST)
+      .subscribe({
+        next: (value) => {
+          if (value) {
+            this.tagsChangeSub.next(value);
+          }
+      },
+      error: () => {
+        //TODO
+        console.log("TODO")
+      }
+    });
   }
 
   public paginatedTags = (pageNumber: number) => {

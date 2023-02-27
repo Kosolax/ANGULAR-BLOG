@@ -1,0 +1,31 @@
+<div class="main-div">
+  <app-breadcrumb></app-breadcrumb>
+  <div class="main-title">
+    <h2>Articles</h2>
+    <button type="button" routerLink="/admin/articles/article" class="btn btn-primary"><i class="bi bi-plus-lg"></i> Ajouter un article</button>
+  </div>
+  <table class="table table-striped" *ngIf="articles">
+    <thead>
+      <tr>
+        <th scope="col">Slug</th>
+        <th scope="col">Titre</th>
+        <th scope="col">Nombre de vues</th>
+        <th scope="col">Tags</th>
+        <th class="col-sm-1 col-2" scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let article of articles">
+        <td [routerLink]="['/admin/articles/article', article.slug]">{{ article.slug }}</td>
+        <td [routerLink]="['/admin/articles/article', article.slug]">{{ article.title }}</td>
+        <td [routerLink]="['/admin/articles/article', article.slug]">{{ article.views }}</td>
+        <td [routerLink]="['/admin/articles/article', article.slug]">{{ article.tags | join:', ' }}</td>
+        <td>
+          <i class="bi bi-pen" [routerLink]="['/admin/articles/article', article.slug]" data-toggle="tooltip" data-placement="top" title="Modifier"></i>&nbsp;&nbsp;<i class="bi bi-trash3" (click)="deleteArticle(article)" data-toggle="tooltip" data-placement="top" title="Supprimer"></i>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <app-pagination [adminPagination]="adminPagination" (currentPageChange)="currentPageChange($event)"></app-pagination>
+</div>

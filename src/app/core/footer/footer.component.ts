@@ -9,6 +9,7 @@ import { AuthenticationService } from '../../shared/services/authentication.serv
 })
 export class FooterComponent implements OnInit {
   public isUserAuthenticated: boolean = false;
+  year: number = new Date().getFullYear();
 
   constructor(private authService: AuthenticationService, private router: Router) { }
 
@@ -16,7 +17,9 @@ export class FooterComponent implements OnInit {
     this.authService.authChanged
       .subscribe(res => {
         this.isUserAuthenticated = res;
-      })
+      });
+
+    
   }
 
   public logout = () => {

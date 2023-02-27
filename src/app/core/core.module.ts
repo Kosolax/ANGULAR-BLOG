@@ -4,10 +4,12 @@ import { FooterComponent } from './footer/footer.component';
 import { ForbiddenComponent } from "./forbidden/forbidden.component";
 import { NotFoundComponent } from "./not-found/not-found.component";
 import { SharedModule } from "../shared/shared.module";
+import { MarkdownModule } from "ngx-markdown";
 
 @NgModule({
   imports: [
     SharedModule,
+    MarkdownModule.forRoot(),
   ],
   declarations: [
     NavigationComponent,
@@ -20,6 +22,7 @@ import { SharedModule } from "../shared/shared.module";
     FooterComponent,
     ForbiddenComponent,
     NotFoundComponent,
+    MarkdownModule
   ],
   providers: []
 })

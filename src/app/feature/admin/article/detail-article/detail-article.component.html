@@ -1,0 +1,82 @@
+<form class="main-div" #articleForm="ngForm" (ngSubmit)="onSubmit(articleForm)">
+  <app-breadcrumb></app-breadcrumb>
+  <div class="row" *ngIf="article">
+    <div class="col-md-6 col-12">
+      <h2>Articles</h2>
+
+      <div class="form-group">
+        <label>Titre</label>
+        <input name="title" class="form-control" [(ngModel)]="article.title" #title="ngModel" required>
+      </div>
+
+      <div class="form-group">
+        <label>Slug</label>
+        <input name="slug" class="form-control" [(ngModel)]="article.slug" #slug="ngModel" required>
+      </div>
+
+      <div class="form-group" *ngIf="article.tags">
+        <div>
+          <label>Tags</label>
+        </div>
+        <div class="custom-row">
+          <div class="form-check article-tag col" *ngFor="let tag of tags">
+            <input class="form-check-input" id="flexCheckDefault" [checked]="shouldBeChecked(tag.id)" type="checkbox" value="{{ tag.id }}" aria-label="Checkbox for following text input" (change)="toggleTag($event)" />
+            <label class="form-check-label" for="flexCheckDefault">
+              {{ tag.name }}
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Content</label>
+        <textarea name="content" class="form-control" [(ngModel)]="article.content" #content="ngModel" required rows="10"></textarea>
+      </div>
+
+      <div class="form-group" *ngIf="article.images">
+        <div class="header">
+          <label>Images</label>
+          <button type="button" class="btn btn-primary" (click)="addImage()"><i class="bi bi-plus-lg"></i>Ajouter une image</button>
+        </div>
+        <div>
+          <ngb-accordion [closeOthers]="true" activeIds="0">
+            <ngb-panel id="{{index}}" title="{{image.placeholder}}" *ngFor="let image of article.images; let index = index;">
+              <ng-template ngbPanelContent>
+
+                <div class="form-group">
+                  <label>Est-ce la miniature ?</label>
+                  <input class="form-check-input thumbnail-check-box" name="isThumbnail" [(ngModel)]="article.images[index].isThumbnail" type="checkbox" #isThumbnail="ngModel"/>
+                </div>
+
+                <div class="form-group">
+                  <label>Placeholder</label>
+                  <input name="placeholder" class="form-control" [(ngModel)]="article.images[index].placeholder" #placeholder="ngModel" required>
+                </div>
+
+                <div class="form-group">
+                  <label>Base 64</label>
+                  <input class="form-control mb-2" type="file" #file (change)="uploadFile(file.files, index)">
+                  <input name="base64Image" class="form-control" [(ngModel)]="article.images[index].base64Image" #base64Image="ngModel" required>
+                </div>
+
+                <button type="button" class="btn btn-primary" (click)="deleteImage(index)"><i class="bi bi-trash3"></i>Supprimer l'image</button>
+              </ng-template>
+            </ngb-panel>
+          </ngb-accordion>
+        </div>
+      </div>
+
+      <div class="button-div">
+        <button class="btn btn-danger">Submit</button>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-12">
+      <div class="header">
+        <h2>Aperçu en markdown</h2>
+        <button type="button" (click)="generateMarkdown()" class="btn btn-primary">Générer l'aperçu</button>
+      </div>
+      <markdown [data]="markdown"></markdown>
+    </div>
+  </div>
+</form>

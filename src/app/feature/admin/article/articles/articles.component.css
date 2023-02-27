@@ -1,0 +1,9 @@
+td {
+  cursor: pointer;
+}
+
+.main-title {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}

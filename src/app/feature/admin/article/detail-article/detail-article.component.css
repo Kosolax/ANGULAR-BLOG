@@ -1,0 +1,37 @@
+.article-tag {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.article-tag label {
+  margin: 0 5px !important;
+}
+
+.button-div {
+  display: flex;
+  margin: 1em 0;
+}
+
+.header {
+    display:flex;
+    justify-content: space-between;
+    margin-bottom :5px;
+}
+
+.form-group {
+    margin: 1em;
+}
+
+.form-group label {
+    margin-bottom: 0.5em;
+}
+
+.custom-row {
+    display:flex;
+    justify-content:center;
+}
+
+.thumbnail-check-box {
+    margin-left:10px;
+}
