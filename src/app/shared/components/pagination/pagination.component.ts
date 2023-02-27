@@ -12,7 +12,6 @@ export class PaginationComponent<T> implements OnInit {
 
   @Output() currentPageChange = new EventEmitter();
 
-  //Admin Pagination
   private _adminPagination: AdminPagination<T> = {} as AdminPagination<T>;
 
   @Input() set adminPagination(value: AdminPagination<T>) {

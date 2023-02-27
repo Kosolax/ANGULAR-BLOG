@@ -1,3 +1,4 @@
+import { Image } from "./Image";
 import { Tag } from "./Tag";
 
 export interface Article {
@@ -7,7 +8,7 @@ export interface Article {
   title: string;
   slug: string;
   tags: Tag[];
-  thumbnail: string;
+  images: Image[]; 
   createdDAte: Date;
   updatedDAte: Date;
   views: number;

@@ -4,6 +4,7 @@ import { BehaviorSubject } from 'rxjs';
 import { AdminPagination } from '../../model/AdminPagination';
 import { LightAdminArticle } from '../../model/LightAdminArticle';
 import { Article } from '../../model/Article';
+import { Image } from '../../model/Image';
 import { Router } from '@angular/router';
 import { ArticlesRoutes } from '../../core/routes/articles.routes'
 
@@ -14,12 +15,42 @@ export class ArticleService {
   private deleteChangeSub = new BehaviorSubject<boolean>(false)
   private adminPaginationSub = new BehaviorSubject<AdminPagination<LightAdminArticle>>({} as AdminPagination<LightAdminArticle>)
   private articleChangeSub = new BehaviorSubject<Article>({} as Article)
+  private markdownChangeSub = new BehaviorSubject<string>("")
 
   public deleteChange = this.deleteChangeSub.asObservable();
   public adminPagination = this.adminPaginationSub.asObservable();
   public articleChange = this.articleChangeSub.asObservable();
+  public markdownChange = this.markdownChangeSub.asObservable();
 
   constructor(private httpClient: HttpClient, @Inject('BASE_URL') private baseUrl: string, private router: Router) { }
+
+  public generateMarkdown(article: Article) {
+    if (!article.images || article.images.length == 0) {
+      this.markdownChangeSub.next("");
+      return;
+    }
+
+    let thumbnail = {} as Image;
+    let imagesAsText = "";
+
+    for (var i = 0; i < article.images.length; i++) {
+      let image = article.images[i];
+
+      if (!image) {
+        continue;
+      }
+
+      if (image.isThumbnail) {
+        thumbnail = image;
+      }
+      else {
+        imagesAsText = imagesAsText + "[" + image.placeholder + "]:" + image.base64Image + "\n\r";
+      }
+    }
+
+    let actualMarkdown = article.title + " \n\r ![Thumbnail](" + thumbnail.base64Image + ") \n\r " + article.content + " \n\r " + imagesAsText;
+    this.markdownChangeSub.next(actualMarkdown);
+  }
 
   public createArticle = (article: Article) => {
     return this.httpClient.post<Article>(this.baseUrl + ArticlesRoutes.BASE_URL + ArticlesRoutes.CREATE, article)

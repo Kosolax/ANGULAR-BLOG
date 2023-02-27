@@ -3,16 +3,20 @@ import { ActivatedRoute } from '@angular/router';
 import { MarkdownService } from 'ngx-markdown';
 import { Article } from '../../../../model/Article';
 import { Tag } from '../../../../model/Tag';
+import { Image } from '../../../../model/Image';
 import { ArticleService } from '../../../../shared/services/article.service';
 import { TagService } from '../../../../shared/services/tag.service';
+import { takeUntil } from 'rxjs';
+import { BaseComponent } from '../../../../shared/components/base/base.component';
 
 @Component({
   selector: 'app-detail-article',
   templateUrl: './detail-article.component.html',
   styleUrls: ['./detail-article.component.css']
 })
-export class DetailArticleComponent implements OnInit {
-  article: Article = {} as Article;
+export class DetailArticleComponent extends BaseComponent implements OnInit {
+
+  article: Article = { } as Article;
   tags: Tag[] = [];
   id: string = "0";
   isRequired = false;
@@ -20,24 +24,36 @@ export class DetailArticleComponent implements OnInit {
 
   private isCreating: boolean = true;
 
-  constructor(private mdService: MarkdownService, private articlesService: ArticleService, private tagsService: TagService, private route: ActivatedRoute) {
+  constructor(private mdService: MarkdownService, private articlesService: ArticleService, private tagsService: TagService, private route: ActivatedRoute)
+  {
+      super();
   }
 
   ngOnInit(): void {
     this.isCreating = true;
     this.id = "0";
 
-    this.articlesService.articleChange
-      .subscribe((article) => {
-        this.article = article;
-        let actualMarkdown = this.article.title + "\n\r" + "![Thumbnail](" + this.article.thumbnail + ")\n\r" + this.article.content;
-        this.markdown = this.mdService.parse(actualMarkdown);
+    if (this.article && (!this.article.images || this.article.images.length == 0)) {
+      this.article.images = [];
+    }
+
+    this.articlesService.markdownChange.pipe(takeUntil(this.notifier))
+      .subscribe((value) => {
+        this.markdown = this.mdService.parse(value);
       });
 
-    this.tagsService.tagsChange
+    this.articlesService.articleChange.pipe(takeUntil(this.notifier))
+      .subscribe((article) => {
+        this.article = article;
+        this.generateMarkdown();
+      });
+
+    this.tagsService.tagsChange.pipe(takeUntil(this.notifier))
       .subscribe((value) => {
         this.tags = value;
-    });
+      });
+
+    this.tagsService.listTags();
 
     this.route.params.subscribe(params => {
       if (params['id']) {
@@ -49,8 +65,20 @@ export class DetailArticleComponent implements OnInit {
         this.article = {} as Article;
       }
     });
+  }
 
-    this.tagsService.listTags();
+  addImage() {
+    let image = {} as Image;
+    image.placeholder = "Image" + this.article.images.length;
+    this.article.images.push(image);
+  }
+
+  deleteImage(index: number) {
+    this.article.images.splice(index, 1);
+  }
+
+  generateMarkdown() {
+    this.articlesService.generateMarkdown(this.article);
   }
 
   toggleTag(event:any) {
@@ -93,21 +121,16 @@ export class DetailArticleComponent implements OnInit {
   }
 
   isValid(form: any) {
-    this.isRequired = false;
-    if (!this.article.thumbnail) {
-      this.isRequired = true;
-    }
-
-    return form.valid && this.article.thumbnail;
+    return form.valid;
   }
 
-  uploadFile = (files: any) => {
+  uploadFile = (files: any, index: number) => {
     const fileToUpload = files[0] as File;
     let reader = new FileReader();
     reader.onload = () => {
       if (reader.result != null) {
         this.isRequired = false;
-        this.article.thumbnail = reader.result.toString();
+        this.article.images[index].base64Image = reader.result.toString();
       }
     }
 

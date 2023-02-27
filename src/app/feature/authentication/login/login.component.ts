@@ -3,19 +3,23 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthenticationService } from '../../../shared/services/authentication.service';
 import { UserLogin } from '../../../model/UserLogin';
+import { takeUntil } from 'rxjs';
+import { BaseComponent } from '../../../shared/components/base/base.component';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
-
+export class LoginComponent extends BaseComponent implements OnInit {
   private returnUrl: string = '';
   loginForm: FormGroup = {} as FormGroup;
   errorMessage: string = '';
   showError: boolean = false;
-  constructor(private authService: AuthenticationService, private router: Router, private route: ActivatedRoute) { }
+
+  constructor(private authService: AuthenticationService, private router: Router, private route: ActivatedRoute) {
+      super();
+  }
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
@@ -25,14 +29,14 @@ export class LoginComponent implements OnInit {
 
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
 
-    this.authService.authChanged
+    this.authService.authChanged.pipe(takeUntil(this.notifier))
       .subscribe((value) => {
         if (value) {
           this.router.navigate([this.returnUrl]);
         }
     });
 
-    this.authService.authChangeError
+    this.authService.authChangeError.pipe(takeUntil(this.notifier))
       .subscribe((value) => {
         this.errorMessage = value;
         this.showError = this.errorMessage != "";
