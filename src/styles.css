@@ -36,3 +36,7 @@ img {
   height: auto;
 }
 
+.btn-primary {
+  background-color: #e84c3d;
+  border-color: #e84c3d;
+}

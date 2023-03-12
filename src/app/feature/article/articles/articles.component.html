@@ -1,0 +1,44 @@
+<div class="top-div">
+  <!--Fil d'ariane-->
+  <app-breadcrumb></app-breadcrumb>
+
+  <!--Recherche-->
+  <div class="input-group">
+    <div class="form-outline col col-sm-4">
+      <input type="search" id="form1" class="form-control" #search placeholder="Rechercher ..."/>
+    </div>
+    <button type="button" class="btn btn-primary" (click)="startSearching(search)">
+      <i class="bi bi-search"></i>
+    </button>
+  </div>
+
+
+  <!--Liste des tags-->
+  <div class="d-flex flex-wrap">
+    <div class="sub-div-tag" *ngFor="let tag of tags">
+      <input id="tagCheckBox" type="checkbox" #currentTag [checked]="shouldBeChecked(tag.name, tag.id, currentTag)" value="{{ tag.id }}" (change)="toggleTag($event, tag.name)" />
+      <label for="tagCheckBox">
+        {{ tag.name }}
+      </label>
+    </div>
+  </div>
+</div>
+
+
+<h2>Articles récemment publiés</h2>
+<div class="card" style="width: 50%;" *ngFor="let article of articles">
+
+  <img class="card-img-top" [src]="article.thumbnail" />
+  <div class="tags">
+    <div class="btn btn-primary disabledBtn tagMargin" *ngFor="let tag of article.tags">{{tag.name}}</div>
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">{{article.title}}</h5>
+    <p class="card-text">{{article.description}}</p>
+    <p class="card-text" *ngIf="article.updatedDate != null">{{article.updatedDate | date:'d MMMM y'}}</p>
+    <p class="card-text" *ngIf="article.createdDate != null">{{article.createdDate | date:'d MMMM y'}}</p>
+    <a [routerLink]="['/articles/article', article.slug]" class="btn btn-primary">Read more</a>
+  </div>
+</div>
+
+<app-pagination [adminPagination]="viewerPagination" (currentPageChange)="currentPageChange($event)"></app-pagination>
