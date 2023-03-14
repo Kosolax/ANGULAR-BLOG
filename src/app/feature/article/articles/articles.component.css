@@ -1,9 +1,9 @@
-.tags {
+/*.tags {
   position: relative;
   display: flex;
   top: -70px;
   justify-content: end;
-}
+}*/
 
 .disabledBtn {
   pointer-events: none;
@@ -11,6 +11,13 @@
 
 .tagMargin {
   margin: 10px;
+  display: inline-block;
+  padding: 0.25rem 1rem;
+  background-color: white;
+  border: 0.1em solid lightgray;
+  border-radius: 10px;
+  color: black;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
 }
 
 .top-div {
@@ -71,4 +78,26 @@ input[type="checkbox"]:checked::before {
 
 :host ::ng-deep .breadcrumb-item, :host ::ng-deep .breadcrumb-item > a, :host ::ng-deep .breadcrumb-item::before {
   color: white;
+}
+
+.bottom-div {
+    padding : 1em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.card {
+  filter: drop-shadow(1.5px 2.6px 3px rgba(119, 119, 119, 0.29));
+  border-radius: 0px;
+}
+
+hr {
+    opacity: 0.1;
 }
