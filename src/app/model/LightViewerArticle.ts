@@ -1,15 +1,14 @@
 import { Image } from "./Image";
 import { Tag } from "./Tag";
 
-export interface Article {
+export interface LightViewerArticle {
   id: number;
-  content: string;
   description: string;
   title: string;
   slug: string;
   tags: Tag[];
-  images: Image[]; 
+  images: Image[];
   createdDate: Date;
   updatedDate: Date;
-  views: number;
+  thumbnail: string;
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { takeUntil } from 'rxjs';
-import { AdminPagination } from '../../../../model/AdminPagination';
+import { Pagination } from '../../../../model/AdminPagination';
 import { LightAdminArticle } from '../../../../model/LightAdminArticle';
 import { BaseComponent } from '../../../../shared/components/base/base.component';
 import { ArticleService } from '../../../../shared/services/article.service';
@@ -14,7 +14,7 @@ export class ArticlesComponent extends BaseComponent implements OnInit {
   public articles: LightAdminArticle[] = [];
 
   private currentPage: number = 1;
-  adminPagination: AdminPagination<LightAdminArticle> = {} as AdminPagination<LightAdminArticle>;
+  adminPagination: Pagination<LightAdminArticle> = {} as Pagination<LightAdminArticle>;
 
   constructor(private articleService: ArticleService)
   {

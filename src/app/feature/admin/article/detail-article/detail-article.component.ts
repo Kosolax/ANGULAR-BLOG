@@ -63,6 +63,7 @@ export class DetailArticleComponent extends BaseComponent implements OnInit {
       }
       else {
         this.article = {} as Article;
+        this.article.images = [];
       }
     });
   }

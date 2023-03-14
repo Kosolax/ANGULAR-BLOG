@@ -14,7 +14,7 @@
         <input name="slug" class="form-control" [(ngModel)]="article.slug" #slug="ngModel" required>
       </div>
 
-      <div class="form-group" *ngIf="article.tags">
+      <div class="form-group" *ngIf="tags">
         <div>
           <label>Tags</label>
         </div>
@@ -33,12 +33,12 @@
         <textarea name="content" class="form-control" [(ngModel)]="article.content" #content="ngModel" required rows="10"></textarea>
       </div>
 
-      <div class="form-group" *ngIf="article.images">
+      <div class="form-group">
         <div class="header">
           <label>Images</label>
           <button type="button" class="btn btn-primary" (click)="addImage()"><i class="bi bi-plus-lg"></i>Ajouter une image</button>
         </div>
-        <div>
+        <div *ngIf="article.images">
           <ngb-accordion [closeOthers]="true" activeIds="0">
             <ngb-panel id="{{index}}" title="{{image.placeholder}}" *ngFor="let image of article.images; let index = index;">
               <ng-template ngbPanelContent>
