@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { AdminPagination } from '../../../model/AdminPagination';
+import { Pagination } from '../../../model/AdminPagination';
 
 @Component({
   selector: 'app-pagination',
@@ -12,15 +12,15 @@ export class PaginationComponent<T> implements OnInit {
 
   @Output() currentPageChange = new EventEmitter();
 
-  private _adminPagination: AdminPagination<T> = {} as AdminPagination<T>;
+  private _adminPagination: Pagination<T> = {} as Pagination<T>;
 
-  @Input() set adminPagination(value: AdminPagination<T>) {
+  @Input() set adminPagination(value: Pagination<T>) {
     this._adminPagination = value;
     this.totalPages = this.adminPagination.totalPages;
     this.currentPage = this.adminPagination.currentPage;
   }
 
-  get adminPagination(): AdminPagination<T> {
+  get adminPagination(): Pagination<T> {
     return this._adminPagination;
   }
 

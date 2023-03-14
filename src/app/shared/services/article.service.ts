@@ -1,24 +1,27 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { AdminPagination } from '../../model/AdminPagination';
+import { Pagination } from '../../model/AdminPagination';
 import { LightAdminArticle } from '../../model/LightAdminArticle';
 import { Article } from '../../model/Article';
 import { Image } from '../../model/Image';
 import { Router } from '@angular/router';
 import { ArticlesRoutes } from '../../core/routes/articles.routes'
+import { LightViewerArticle } from '../../model/LightViewerArticle';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ArticleService {
   private deleteChangeSub = new BehaviorSubject<boolean>(false)
-  private adminPaginationSub = new BehaviorSubject<AdminPagination<LightAdminArticle>>({} as AdminPagination<LightAdminArticle>)
+  private viewerPaginationSub = new BehaviorSubject<Pagination<LightViewerArticle>>({} as Pagination<LightViewerArticle>)
+  private adminPaginationSub = new BehaviorSubject<Pagination<LightAdminArticle>>({} as Pagination<LightAdminArticle>)
   private articleChangeSub = new BehaviorSubject<Article>({} as Article)
   private markdownChangeSub = new BehaviorSubject<string>("")
 
   public deleteChange = this.deleteChangeSub.asObservable();
   public adminPagination = this.adminPaginationSub.asObservable();
+  public viewerPagination = this.viewerPaginationSub.asObservable();
   public articleChange = this.articleChangeSub.asObservable();
   public markdownChange = this.markdownChangeSub.asObservable();
 
@@ -53,7 +56,7 @@ export class ArticleService {
   }
 
   public createArticle = (article: Article) => {
-    return this.httpClient.post<Article>(this.baseUrl + ArticlesRoutes.BASE_URL + ArticlesRoutes.CREATE, article)
+    return this.httpClient.post<Article>(this.baseUrl + ArticlesRoutes.ADMIN_BASE_URL + ArticlesRoutes.CREATE, article)
       .subscribe({
         next: () => {
           this.router.navigate(["/admin/articles"]);
@@ -66,7 +69,7 @@ export class ArticleService {
   }
 
   public updateArticle = (article: Article) => {
-    return this.httpClient.put<Article>(this.baseUrl + ArticlesRoutes.BASE_URL + ArticlesRoutes.MODIFY.replace("{0}", article.id.toString()), article)
+    return this.httpClient.put<Article>(this.baseUrl + ArticlesRoutes.ADMIN_BASE_URL + ArticlesRoutes.MODIFY.replace("{0}", article.id.toString()), article)
       .subscribe({
         next: () => {
           this.router.navigate(["/admin/articles"]);
@@ -79,7 +82,7 @@ export class ArticleService {
   }
 
   public deleteArticle = (article: LightAdminArticle) => {
-    this.httpClient.delete<Article>(this.baseUrl + ArticlesRoutes.BASE_URL + ArticlesRoutes.DELETE.replace("{0}", article.id.toString()))
+    this.httpClient.delete<Article>(this.baseUrl + ArticlesRoutes.ADMIN_BASE_URL + ArticlesRoutes.DELETE.replace("{0}", article.id.toString()))
       .subscribe({
         next: () => {
           this.deleteChangeSub.next(!this.deleteChangeSub.value);
@@ -92,7 +95,7 @@ export class ArticleService {
   }
 
   public getArticle = (id: string) => {
-    return this.httpClient.get<Article>(this.baseUrl + ArticlesRoutes.BASE_URL + ArticlesRoutes.GET.replace("{0}", id))
+    return this.httpClient.get<Article>(this.baseUrl + ArticlesRoutes.ADMIN_BASE_URL + ArticlesRoutes.GET.replace("{0}", id))
       .subscribe({
         next: (result) => {
           this.articleChangeSub.next(result);
@@ -105,10 +108,23 @@ export class ArticleService {
   }
 
   public paginatedArticles = (pageNumber: number) => {
-    this.httpClient.get<AdminPagination<Article>>(this.baseUrl + ArticlesRoutes.BASE_URL + ArticlesRoutes.PAGINATION.replace("{0}", pageNumber.toString()))
+    this.httpClient.get<Pagination<LightAdminArticle>>(this.baseUrl + ArticlesRoutes.ADMIN_BASE_URL + ArticlesRoutes.PAGINATION.replace("{0}", pageNumber.toString()))
       .subscribe({
         next: (result) => {
           this.adminPaginationSub.next(result);
+        },
+        error: () => {
+          //TODO
+          console.log("TODO")
+        }
+      });
+  }
+
+  public paginatedViewerArticles = (pageNumber: number, search: string, tagsId: number[]) => {
+    this.httpClient.post<Pagination<LightViewerArticle>>(this.baseUrl + ArticlesRoutes.BASE_URL + ArticlesRoutes.VIEWER_PAGINATION, { search, pageNumber, tagsId })
+      .subscribe({
+        next: (result) => {
+          this.viewerPaginationSub.next(result);
         },
         error: () => {
           //TODO

@@ -1,4 +1,4 @@
-export interface AdminPagination<T> {
+export interface Pagination<T> {
   currentPage: number;
   totalPages: number;
   items: T[];

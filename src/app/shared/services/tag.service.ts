@@ -3,7 +3,7 @@ import { Inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { TagsRoutes } from '../../core/routes/tags.routes';
-import { AdminPagination } from '../../model/AdminPagination';
+import { Pagination } from '../../model/AdminPagination';
 import { Tag } from '../../model/Tag';
 
 @Injectable({
@@ -11,7 +11,7 @@ import { Tag } from '../../model/Tag';
 })
 export class TagService {
   private deleteChangeSub = new BehaviorSubject<boolean>(false)
-  private adminPaginationSub = new BehaviorSubject<AdminPagination<Tag>>({} as AdminPagination<Tag>)
+  private adminPaginationSub = new BehaviorSubject<Pagination<Tag>>({} as Pagination<Tag>)
   private tagChangeSub = new BehaviorSubject<Tag>({} as Tag)
   private tagsChangeSub = new BehaviorSubject<Tag[]>({} as Tag[])
 
@@ -23,7 +23,7 @@ export class TagService {
   constructor(private httpClient: HttpClient, @Inject('BASE_URL') private baseUrl: string, private router: Router) { }
 
   public createTag = (tag: Tag) => {
-    return this.httpClient.post<Tag>(this.baseUrl + TagsRoutes.BASE_URL + TagsRoutes.CREATE, tag)
+    return this.httpClient.post<Tag>(this.baseUrl + TagsRoutes.ADMIN_BASE_URL + TagsRoutes.CREATE, tag)
       .subscribe({
         next: () => {
           this.router.navigate(["/admin/tags"]);
@@ -36,7 +36,7 @@ export class TagService {
   }
 
   public updateTag = (tag: Tag) => {
-    return this.httpClient.put<Tag>(this.baseUrl + TagsRoutes.BASE_URL + TagsRoutes.MODIFY.replace("{0}", tag.id.toString()), tag)
+    return this.httpClient.put<Tag>(this.baseUrl + TagsRoutes.ADMIN_BASE_URL + TagsRoutes.MODIFY.replace("{0}", tag.id.toString()), tag)
       .subscribe({
         next: () => {
           this.router.navigate(["/admin/tags"]);
@@ -49,7 +49,7 @@ export class TagService {
   }
 
   public deleteTag = (tag: Tag) => {
-    this.httpClient.delete<Tag>(this.baseUrl + TagsRoutes.BASE_URL + TagsRoutes.DELETE.replace("{0}", tag.id.toString()))
+    this.httpClient.delete<Tag>(this.baseUrl + TagsRoutes.ADMIN_BASE_URL + TagsRoutes.DELETE.replace("{0}", tag.id.toString()))
       .subscribe({
         next: () => {
           this.deleteChangeSub.next(!this.deleteChangeSub.value);
@@ -62,7 +62,7 @@ export class TagService {
   }
 
   public getTag = (id: string) => {
-    return this.httpClient.get<Tag>(this.baseUrl + TagsRoutes.BASE_URL + TagsRoutes.GET.replace("{0}", id))
+    return this.httpClient.get<Tag>(this.baseUrl + TagsRoutes.ADMIN_BASE_URL + TagsRoutes.GET.replace("{0}", id))
       .subscribe({
         next: (result) => {
           this.tagChangeSub.next(result);
@@ -90,7 +90,7 @@ export class TagService {
   }
 
   public paginatedTags = (pageNumber: number) => {
-    this.httpClient.get<AdminPagination<Tag>>(this.baseUrl + TagsRoutes.BASE_URL + TagsRoutes.PAGINATION.replace("{0}", pageNumber.toString()))
+    this.httpClient.get<Pagination<Tag>>(this.baseUrl + TagsRoutes.ADMIN_BASE_URL + TagsRoutes.PAGINATION.replace("{0}", pageNumber.toString()))
       .subscribe({
         next: (result) => {
           this.adminPaginationSub.next(result);

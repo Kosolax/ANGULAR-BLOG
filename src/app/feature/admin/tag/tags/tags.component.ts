@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { takeUntil } from 'rxjs';
-import { AdminPagination } from '../../../../model/AdminPagination';
+import { Pagination } from '../../../../model/AdminPagination';
 import { Tag } from '../../../../model/Tag';
 import { BaseComponent } from '../../../../shared/components/base/base.component';
 import { TagService } from '../../../../shared/services/tag.service';
@@ -14,7 +14,7 @@ export class TagsComponent extends BaseComponent implements OnInit {
   public tags: Tag[] = [];
 
   private currentPage: number = 1;
-  adminPagination: AdminPagination<Tag> = {} as AdminPagination<Tag>;
+  adminPagination: Pagination<Tag> = {} as Pagination<Tag>;
 
   constructor(private tagService: TagService) {
       super();
